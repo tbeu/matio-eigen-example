@@ -14,9 +14,6 @@ endif()
 
 include(${CMAKE_BINARY_DIR}/conan.cmake)
 
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
 set(LIBS_DIR ${CMAKE_CURRENT_BINARY_DIR}/libs)
 set(EIGEN_MATIO_URL https://raw.githubusercontent.com/tesch1/eigen-matio/master/MATio)
 set(EIGEN_MATIO_DIR ${LIBS_DIR}/include)
@@ -48,6 +45,8 @@ find_package(Eigen3 REQUIRED)
 add_library(example STATIC src/example.cpp include/example.hpp)
 target_include_directories(example PRIVATE ${EIGEN_MATIO_DIR})
 target_link_libraries(example PRIVATE matio::matio Eigen3::Eigen)
+target_compile_features(example PUBLIC cxx_std_17)
+set_target_properties(example PROPERTIES CXX_EXTENSIONS OFF)
 
 enable_testing()
 

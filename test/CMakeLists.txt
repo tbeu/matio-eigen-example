@@ -27,6 +27,8 @@ foreach(file ${TEST_SOURCES})
   add_executable(${test_name}_Tests ${file})
   target_include_directories(${test_name}_Tests PRIVATE "${CMAKE_SOURCE_DIR}/include")
   target_link_libraries(${test_name}_Tests PRIVATE example GTest::GTest)
+  target_compile_features(${test_name}_Tests PUBLIC cxx_std_17)
+  set_target_properties(${test_name}_Tests PROPERTIES CXX_EXTENSIONS OFF)
   gtest_add_tests(
     TARGET ${test_name}_Tests
     WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/test")
