@@ -1,6 +1,6 @@
 # Matio-Eigen-Example
 
-Simple C++ example how to use the libraries [matio](https://github.com/tbeu/matio) and [eigen](http://eigen.tuxfamily.org/) in CMake using the [Conan](https://conan.io/) package manager.
+Simple C++ example how to use the libraries [matio](https://github.com/tbeu/matio) and [eigen](http://eigen.tuxfamily.org/) via CMake.
 
 ## Status
 
