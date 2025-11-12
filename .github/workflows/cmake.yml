@@ -3,6 +3,9 @@ name: "CMake build"
 on:
   push:
   pull_request:
+  schedule:
+    - cron: "27 2 * * 2"
+  workflow_call:
   workflow_dispatch:
 
 defaults:
@@ -40,7 +43,7 @@ jobs:
             # compiler: mingw
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 5
       - name: Setup python environment
@@ -62,16 +65,16 @@ jobs:
             ${{ runner.os }}-conan2-
       - name: Configure (${{ matrix.configuration }})
         run: |
-          if [ "${{ matrix.compiler }}" == "msvc" ]; then
+          if [ "${{ matrix.toolchain }}" == "windows-msvc" ]; then
             cmake -S . -B build -DCMAKE_PROJECT_TOP_LEVEL_INCLUDES=conan_provider
-          elif [ "${{ matrix.compiler }}" == "mingw" ]; then
+          elif [ "${{ matrix.toolchain }}" == "windows-mingw" ]; then
             cmake -S . -B build -DCMAKE_PROJECT_TOP_LEVEL_INCLUDES=conan_provider -DCMAKE_BUILD_TYPE=${{ matrix.configuration }} -G "MinGW Makefiles"
           else
             cmake -S . -B build -DCMAKE_PROJECT_TOP_LEVEL_INCLUDES=conan_provider -DCMAKE_BUILD_TYPE=${{ matrix.configuration }}
           fi
       - name: Build with ${{ matrix.compiler }}
         run: |
-          if [ "${{ matrix.compiler }}" == "msvc" ]; then
+          if [ "${{ matrix.toolchain }}" == "windows-msvc" ]; then
             cmake --build build --config ${{ matrix.configuration }}
           else
             cmake --build build -- -j8
