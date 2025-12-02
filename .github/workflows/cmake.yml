@@ -43,7 +43,7 @@ jobs:
             # compiler: mingw
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 5
       - name: Setup python environment
